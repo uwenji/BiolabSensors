@@ -56,16 +56,12 @@ def git_sync():
         print("No changes to add.")
     
 if __name__ == "__main__":
-    while True:
-        try:
-            # Ensure you are in the correct directory
-            os.chdir(repo_path)
-            
-            # Sync files with the repository
-            git_sync()
-        except Exception as e:
-            print(f"An error occurred: {e}")
+    try:
+        # Ensure you are in the correct directory
+        os.chdir(repo_path)
         
-        # Wait for 2 minutes before the next sync
-        time.sleep(30)
+        # Sync files with the repository
+        git_sync()
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
