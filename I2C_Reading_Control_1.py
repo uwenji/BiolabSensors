@@ -120,7 +120,7 @@ def main():
     
     saveCSV("/home/pi/Desktop/Atlas_Sensor/CSV/electronphoresis_data.csv",data)
     #control pump
-    if float(chamber_value) > 25.0 or float(pH_level) < 6 or float(pH_level) > 8:
+    if float(chamber_value) > 18.0 or float(pH_level) < 6 or float(pH_level) > 8:
         pump1.write("D,50")
         pump2.write("D,50")
         time.sleep(1.0)
