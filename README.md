@@ -121,3 +121,6 @@ sudo i2cdetect -y 1
 
 `sudo apt-get install i2c-tools`,
 `sudo apt install python3-smbus` (raspbian 12)
+
+https://atlas-scientific.com/files/EZO_PMP_Datasheet.pdf
+https://files.atlas-scientific.com/pi_sample_code.pdf
