@@ -32,6 +32,100 @@ add this lines in bottom
 dtoverlay=disable-bt
 dtoverlay=miniuart-bt
 ```
+# SSH setup and Git preparation:
+
+run this 
+```
+sudo nano /etc/apt/sources.list
+```
+
+add this line
+```
+deb http://raspbian.raspberrypi.org/raspbian/ buster main contrib non-free rpi
+```
+
+```
+sudo apt update
+sudo apt full-upgrade
+
+sudo apt autoremove
+sudo apt clean
+
+sudo reboot
+```
+
+run this line and replace your github email
+```
+ssh-keygen -t rsa -b 4096 -C "github@email.com"
+
+```
+
+ should something like this
+```
+**pi@raspberrypi**:**~ $** ssh-keygen -t rsa -b 4096 -C "yw.ji90@gmail.com"
+
+Generating public/private rsa key pair.
+
+Enter file in which to save the key (/home/pi/.ssh/id_rsa): 
+
+Created directory '/home/pi/.ssh'.
+
+Enter passphrase (empty for no passphrase): 
+
+Enter same passphrase again: 
+
+Your identification has been saved in /home/pi/.ssh/id_rsa
+
+Your public key has been saved in /home/pi/.ssh/id_rsa.pub
+
+The key fingerprint is:
+
+SHA256:A+y21+ss3uheMWVtHBlPvsTtIJ32qGoHAKAI/87ihSM yw.ji90@gmail.com
+
+The key's randomart image is:
+
++---[RSA 4096]----+
+
+|.   ..        oo.|
+
+|.o . ..      +o*.|
+
+|. o   o.    + Oo+|
+
+|   . . ..  o +.=.|
+
+|    . o S.o   ..o|
+
+|   + . . o.o .   |
+
+|E + + . . o..    |
+
+| o +   ..=.o.    |
+
+|  .    +=+*.     |
+
++----[SHA256]-----+
+```
+
+then take ssh token from this 
+```
+cat ~/.ssh/id_rsa.pub
+```
+then copy the ssh token and add into your github account
+in your github Settings-->SSH and GPG keys
+
+```
+git clone git@github.com:uwenji/BiolabSensors.git
+```
+
+then cd to your repository folder
+
+```
+git config --global user.email "your@email.com"
+
+git config --global user.name "github account name"
+```
+
 
 # GSS gas sensor:
 
