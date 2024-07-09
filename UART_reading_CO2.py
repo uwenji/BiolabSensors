@@ -1,6 +1,44 @@
 import serial
+import io
+import sys
+import fcntl
 import time
+import copy
+import string
+import os
+import csv
 
+def saveCSV(file_Path, Data):
+    second = time.time()
+    local_time =time.ctime(second)
+    new_titles = [
+        ["Time","Local Time","CO2_1","CO2_2"],
+        ]
+    csv_file = file_Path
+    
+    if not os.path.isfile(csv_file):
+        with open(csv_file, mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows(new_titles)
+    
+    else:
+        with open(csv_file, mode='a', newline='') as file:
+            local_time = time.ctime(second)
+            #ppm = read_USB()
+            #o2_ppm = read_ser()
+            new_data = []
+            express = []
+            express.append(str(second))
+            express.append(local_time)
+            for d in Data:
+                express.append(d + "\n")
+            #express.append(str(ppm) + "\n")
+            #express.append(str(o2_ppm) + "\n")
+            new_data.append(express)
+            writer = csv.writer(file)
+            writer.writerows(new_data)
+            print(express)
+            
 def process_sensor_data(data):
     # Splitting the data into lines
     lines = data.split('\n')
@@ -33,6 +71,21 @@ def read_ser():
         #response = ser.read(ser.in_waiting or 1)
         #print("Device Information:", device_info)
         
+        device_info = send_command(ser, 'Z')
+        response = ser.read(ser.in_waiting or 1)
+        print(device_info)
+        #ppm = process_sensor_data(device_info)
+        return device_info #ppm
+            
+    except Exception as e:
+        print("Error: {}".format(e))
+    finally:
+        ser.close()
+
+def read_USB():
+    ser = serial.Serial('/dev/ttyUSB0',9600, timeout=1) 
+
+    try:
         device_info = send_command(ser, 'Z')
         response = ser.read(ser.in_waiting or 1)
         print(device_info)
