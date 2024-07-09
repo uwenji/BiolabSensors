@@ -85,19 +85,19 @@ def main():
         responce = dev.read()
         print(responce)"""
         match name:
-            case "RTD_66":
+            case "RTD_68":
                 chamber01 = dev
                 print("electrophoresis check")
-            case "RTD_67":
+            case "RTD_69":
                 chamber02 = dev
                 print("reservoir check")
-            case "pH_100":
+            case "pH_99":
                 pH_sensor = dev
                 print("PH sensor check")
-            case "PMP_103":
+            case "PMP_113":
                 pump1 = dev
                 print("Pump1 check")
-            case "PMP_114":
+            case "PMP_115":
                 pump2 = dev
                 print("Pump2 check")
     #reading sensor values

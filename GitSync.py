@@ -3,7 +3,7 @@ import os
 import time
 
 # Change these variables to match your setup
-repo_path = '/home/pi/Desktop/Atlas_Sensor'
+repo_path = '/home/pi/Desktop/BiolabSensors'
 commit_message = 'Automated commit message'
 
 def run_git_command(command, cwd=None):
