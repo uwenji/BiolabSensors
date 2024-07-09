@@ -133,7 +133,7 @@ check serial port connective:
 ```
 ls -l /dev/serial*
 ```
-
+run print serial by run `python3 printSerial.py`
 how to list all the serial connection:
 ```
 import serial.tools.list_ports
