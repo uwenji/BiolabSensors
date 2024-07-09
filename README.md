@@ -117,10 +117,90 @@ to detect i2c device connectivity
 ```
 sudo i2cdetect -y 1
 ```
+should like this. in this case we have 4 i2c device 
+```
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
 
+00:                         -- -- -- -- -- -- -- -- 
 
-`sudo apt-get install i2c-tools`,
-`sudo apt install python3-smbus` (raspbian 12)
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+40: -- -- 42 43 -- -- -- -- -- -- -- -- -- -- -- -- 
+
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+60: -- -- -- -- 64 -- -- 67 -- -- -- -- -- -- -- -- 
+
+70: -- -- 72 -- -- -- -- --
+```
+
+install 
+```
+sudo apt-get install i2c-tools
+sudo apt install python3-smbus
+```
+
+run `python3 i2c.py`
+
+```
+>> Atlas Scientific I2C sample code
+
+>> Any commands entered are passed to the default target device via I2C except:
+
+  - Help
+
+      brings up this menu
+
+  - List 
+
+      lists the available I2C circuits.
+
+      the --> indicates the target device that will receive individual commands
+
+  - xxx:[command]
+
+      sends the command to the device at I2C address xxx 
+
+      and sets future communications to that address
+
+      Ex: "102:status" will send the command status to address 102
+
+  - all:[command]
+
+      sends the command to all devices
+
+  - Poll[,x.xx]
+
+      command continuously polls all devices
+
+      the optional argument [,x.xx] lets you set a polling time
+
+      where x.xx is greater than the minimum 1.50 second timeout.
+
+      by default it will poll every 1.50 seconds
+
+>> Pressing ctrl-c will stop the polling
+
+--> RTD 66 
+
+ - RTD 67 
+
+ - pH 100 
+
+ - PMP 103 
+
+ - PMP 114 
+
+>> Enter command:
+```
+
+RTD --> temperature sensor
+pH --> pH sensor
+PMP --> pump
 
 https://atlas-scientific.com/files/EZO_PMP_Datasheet.pdf
 https://files.atlas-scientific.com/pi_sample_code.pdf
