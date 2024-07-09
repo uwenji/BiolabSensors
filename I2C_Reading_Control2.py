@@ -74,6 +74,7 @@ def main():
     pH_sensor = AtlasI2C()
     pump1 = AtlasI2C()
     pump2 = AtlasI2C()
+     #editting the case device & number 
     for dev in device_list:
         #print_devices(device_list,dev)
         name = dev.moduletype + "_" + str(dev.address)
@@ -117,7 +118,8 @@ def main():
     pH_level = "".join(pH_sensor.read().split(": ")[1].split('\x00'))
     data.append(pH_level)
     print(pH_level)
-    
+
+     #save csv file location
     saveCSV("/home/pi/Desktop/Atlas_Sensor/CSV/electronphoresis_data2.csv",data)
     #control pump
     if float(chamber_value) > 20.0 or float(pH_level) < 6 or float(pH_level) > 8:
