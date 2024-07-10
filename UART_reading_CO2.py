@@ -73,9 +73,9 @@ def read_ser():
         
         device_info = send_command(ser, 'Z')
         response = ser.read(ser.in_waiting or 1)
-        print(device_info)
-        #ppm = process_sensor_data(device_info)
-        return device_info #ppm
+        #print(device_info)
+        ppm = process_sensor_data(device_info)
+        return ppm #device_info
             
     except Exception as e:
         print("Error: {}".format(e))
@@ -88,14 +88,28 @@ def read_USB():
     try:
         device_info = send_command(ser, 'Z')
         response = ser.read(ser.in_waiting or 1)
-        print(device_info)
-        #ppm = process_sensor_data(device_info)
-        return device_info #ppm
+        #print(device_info)
+        ppm = process_sensor_data(device_info)
+        return ppm #device_info
             
     except Exception as e:
         print("Error: {}".format(e))
     finally:
         ser.close()
+        
+def main():
+    #reading sensor values
+    data = []
+    ppm1 = read_USB()
+    time.sleep(1)
+    data.append(ppm1)
+    print(ppm1 + " ppm")
+    ppm2 = read_ser()
+    time.sleep(1)
+    data.append(ppm2)
+    print(ppm2 + " ppm")
 
+     #save csv file location
+    saveCSV("/home/pi/Desktop/BiolabSensors/CSV/electronphoresis_data2.csv",data)
 if __name__ == "__main__":
-    print(read_ser())
+    main()
