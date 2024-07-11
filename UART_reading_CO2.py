@@ -102,12 +102,12 @@ def main():
     data = []
     ppm1 = read_USB()
     time.sleep(1)
-    data.append(ppm1)
-    print(ppm1 + " ppm")
+    data.append(str(ppm1))
+    print(str(ppm1) + " ppm")
     ppm2 = read_ser()
     time.sleep(1)
-    data.append(ppm2)
-    print(ppm2 + " ppm")
+    data.append(str(ppm2))
+    print(str(ppm2) + " ppm")
 
      #save csv file location
     saveCSV("/home/pi/Desktop/BiolabSensors/CSV/co2.csv",data)
