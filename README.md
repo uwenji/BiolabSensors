@@ -62,7 +62,7 @@ ssh-keygen -t rsa -b 4096 -C "github@email.com"
 
  should something like this
 ```
-**pi@raspberrypi**:**~ $** ssh-keygen -t rsa -b 4096 -C "yw.ji90@gmail.com"
+**pi@raspberrypi**:**~ $** ssh-keygen -t rsa -b 4096 -C "youremail0@email.com"
 
 Generating public/private rsa key pair.
 
@@ -80,29 +80,29 @@ Your public key has been saved in /home/pi/.ssh/id_rsa.pub
 
 The key fingerprint is:
 
-SHA256:A+y21+ss3uheMWVtHBlPvsTtIJ32qGoHAKAI/87ihSM yw.ji90@gmail.com
+SHA256:*******************************/yyyyyy youremail90@email.com
 
 The key's randomart image is:
 
 +---[RSA 4096]----+
 
-|.   ..        oo.|
+|.................|
 
-|.o . ..      +o*.|
+|.................|
 
-|. o   o.    + Oo+|
+|.................|
 
-|   . . ..  o +.=.|
+|.................|
 
-|    . o S.o   ..o|
+|.................|
 
-|   + . . o.o .   |
+|.................|
 
-|E + + . . o..    |
+|.................|
 
-| o +   ..=.o.    |
+|.................|
 
-|  .    +=+*.     |
+|.................|
 
 +----[SHA256]-----+
 ```
