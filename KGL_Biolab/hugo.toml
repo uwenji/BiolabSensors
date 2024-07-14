@@ -1,0 +1,12 @@
+baseURL = "https://uwenji.github.io/BiolabSensors"
+languageCode = "en-us"
+title = "Lab Sensor Data Visualization"
+theme = "PaperMod"
+publishDir = "../docs"
+
+[params]
+  author = "you wen ji"
+  description = "A site to visualize lab sensor data"
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
