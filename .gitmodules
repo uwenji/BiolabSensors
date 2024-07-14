@@ -1,0 +1,3 @@
+[submodule "KGL_Biolab/themes/PaperMod"]
+	path = KGL_Biolab/themes/PaperMod
+	url = https://github.com/adityatelange/hugo-PaperMod.git
