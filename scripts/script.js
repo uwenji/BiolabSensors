@@ -1,4 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Theme switcher
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+    const header = document.querySelector('header');
+    const chartContainer = document.getElementById('chart-container');
+
+    themeToggleButton.addEventListener('click', () => {
+        if (body.classList.contains('light')) {
+            body.classList.replace('light', 'dark');
+            header.classList.replace('light', 'dark');
+            chartContainer.classList.replace('light', 'dark');
+            themeToggleButton.textContent = 'Switch to Light Theme';
+        } else {
+            body.classList.replace('dark', 'light');
+            header.classList.replace('dark', 'light');
+            chartContainer.classList.replace('dark', 'light');
+            themeToggleButton.textContent = 'Switch to Dark Theme';
+        }
+    });
+
+    // Load CSV data and render chart
     d3.csv('data/co2.csv').then(data => {
         const parseTime = d3.timeParse("%a %b %d %H:%M:%S %Y");
 

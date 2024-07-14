@@ -1,16 +1,44 @@
-body {
+/* Light Theme */
+body.light {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
     background-color: #f4f4f4;
+    color: #000;
 }
 
-header {
+header.light {
     text-align: center;
     margin-bottom: 20px;
 }
 
-#chart-container {
+#chart-container.light {
     width: 80%;
     margin: auto;
+}
+/* Dark Theme */
+body.dark {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+header.dark {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#chart-container.dark {
+    width: 80%;
+    margin: auto;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
 }
