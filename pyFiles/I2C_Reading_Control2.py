@@ -6,7 +6,7 @@ import copy
 import string
 import os
 import csv
-from AtlasI2C import (
+from pyFiles.AtlasI2C import (
      AtlasI2C
 )
 

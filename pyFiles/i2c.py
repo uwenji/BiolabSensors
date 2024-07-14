@@ -6,7 +6,7 @@ import fcntl
 import time
 import copy
 import string
-from AtlasI2C import (
+from pyFiles.AtlasI2C import (
 	 AtlasI2C
 )
 
