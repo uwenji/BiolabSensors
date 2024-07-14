@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .data([data])
             .attr("class", "line")
             .attr("d", line1)
-            .style("stroke", "yellow")
+            .style("stroke", "steelblue")
             .style("fill", "none");
 
         svg.append("path")
