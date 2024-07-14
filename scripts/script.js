@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         data.forEach(d => {
             d["Local Time"] = parseTime(d["Local Time"]);
-            d["CO2_1"] = d["CO2_1"] === "None" ? null : +d["CO2_1"].replace(/"/g, '');
-            d["CO2_2"] = d["CO2_2"] === "None" ? null : +d["CO2_2"].replace(/"/g, '');
+            d["CO2_1"] = d["CO2_1"] === "None" ? null : +d["CO2_1"];
+            d["CO2_2"] = d["CO2_2"] === "None" ? null : +d["CO2_2"];
         });
 
         const margin = { top: 20, right: 20, bottom: 30, left: 50 };
@@ -38,13 +38,15 @@ document.addEventListener('DOMContentLoaded', function () {
             .data([data])
             .attr("class", "line")
             .attr("d", line1)
-            .style("stroke", "steelblue");
+            .style("stroke", "steelblue")
+            .style("fill", "none");
 
         svg.append("path")
             .data([data])
             .attr("class", "line")
             .attr("d", line2)
-            .style("stroke", "red");
+            .style("stroke", "red")
+            .style("fill", "none");
 
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
