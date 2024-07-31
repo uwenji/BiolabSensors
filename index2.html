@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Sensor Data Visualization</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="scripts/script.js" defer></script>
+</head>
+<body id="observablehq-main" class="observablehq">
+    <div class="observablehq-header-anchor">
+        <h1>Lab Sensor Data Visualization</h1>
+        <span style="display: flex; align-items: baseline; gap: 0.5rem; font-size: 14px;">
+            <a target="_blank" href="https://github.com/uwenji/BiolabSensors" rel="noopener noreferrer"></a>
+        </span>
+    </div>
+    <p>Monitoring sensors in Biolab at Royal Danish Academy</p>
+        <button id="theme-toggle">Light</button>
+    <div class="grid grid-cols-2 card">
+        <div id="data-table-container" class="ccard grid-colspan-1" style="max-height: 300px;">
+            <input type="text" id="search-input" placeholder="Search sensor data...">
+            <div id="data-table-wrapper">
+                <table id="data-table" style="table-layout: fixed;">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>CO2 (ppm)</th>
+                            <th>CO2 (ppm)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card grid-colspan-1" id="zoomed-chart"></div>  
+    </div>
+    <div id="chart-container" class="dark">
+        <div class="chart-block" id="main-chart"></div>
+    </div>
+    
+    <div id="legend" class="light"></div>
+</body>
+</html>

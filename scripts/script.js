@@ -19,15 +19,59 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Function to interpolate missing values
+    function interpolateMissingValues(data, field) {
+        let previousValidIndex = null;
+        let nextValidIndex = null;
+
+        data.forEach((d, i) => {
+            if (d[field] !== null) {
+                if (previousValidIndex !== null) {
+                    let startValue = data[previousValidIndex][field];
+                    let endValue = d[field];
+                    let steps = i - previousValidIndex;
+                    let stepValue = (endValue - startValue) / steps;
+                    for (let j = previousValidIndex + 1; j < i; j++) {
+                        data[j][field] = startValue + stepValue * (j - previousValidIndex);
+                    }
+                }
+                previousValidIndex = i;
+            }
+        });
+
+        // Handle trailing null values
+        for (let i = data.length - 1; i >= 0; i--) {
+            if (data[i][field] === null) {
+                data[i][field] = data[previousValidIndex][field];
+            } else {
+                previousValidIndex = i;
+            }
+        }
+    }
+
+
     // Load CSV data and render chart
-    d3.csv('data/electronphoresis_data2.csv').then(data => {
-        const parseTime = d3.timeParse("%a %b %d %H:%M:%S %Y");
+    d3.csv('data/co2.csv').then(data => {
+        const parseTime = d3.timeParse("%a %b %d %H:%M:%S %Y"); //Thu Jul 11 18:20:11 2024
+        const tbody = d3.select("#data-table tbody");
+        const formatTime = d3.timeFormat("%Y-%m-%d %H:%M:%S");
 
         data.forEach(d => {
             d["Local Time"] = parseTime(d["Local Time"]);
-            d["CO2_1"] = d["electronphoresis"] === "None" ? null : +d["electronphoresis"];
-            d["CO2_2"] = d["reservoir"] === "None" ? null : +d["reservoir"];
+            d["CO2_1"] = d["CO2_1"] === "None" ? null : +d["CO2_1"];
+            d["CO2_2"] = d["CO2_2"] === "None" ? null : +d["CO2_2"];
+            tbody.append("tr")
+                .html(`
+                    <td>${formatTime(d["Local Time"])}</td>
+                    <td>${d["CO2_1"] !== null ? d["CO2_1"] : ''}</td>
+                    <td>${d["CO2_2"] !== null ? d["CO2_2"] : ''}</td>
+                `);
         });
+        // Populate the table
+
+
+        // Interpolate missing values for CO2_2
+        interpolateMissingValues(data, "CO2_2");
 
         const margin = { top: 20, right: 20, bottom: 30, left: 50 };
         const width = 960 - margin.left - margin.right;
@@ -63,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function () {
         x.domain(d3.extent(data, d => d["Local Time"]));
         y.domain([0, d3.max(data, d => Math.max(d["CO2_1"], d["CO2_2"]))]);
 
+   
+
         svgMain.append("path")
             .data([data])
             .attr("class", "line")
@@ -75,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .data([data])
             .attr("class", "line")
             .attr("d", line2)
-            .style("stroke", "red")
+            .style("stroke", "green")
             .style("stroke-width", 1.5)
             .style("fill", "none");
 
@@ -86,6 +132,20 @@ document.addEventListener('DOMContentLoaded', function () {
         svgMain.append("g")
             .call(d3.axisLeft(y));
 
+        // Add the Y gridlines and label
+        svgMain.append("g")
+            .call(d3.axisLeft(y).ticks(height / 40))
+            .call(g => g.select(".domain").remove())
+            .call(g => g.selectAll(".tick line").clone()
+                .attr("x2", width)
+                .attr("stroke-opacity", 0.1));
+            // .call(g => g.append("text")
+            //     .attr("x", -margin.left)
+            //     .attr("y", 10)
+            //     .attr("fill", "currentColor")
+            //     .attr("text-anchor", "start")
+            //     .text("↑ CO2 (ppm)"));
+
         // Add brushing
         const brush = d3.brushX()
             .extent([[0, 0], [width, height]])
@@ -95,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .attr("class", "brush")
             .call(brush);
 
-        // Preselect last 4 hours
+        // Preselect last 1 hours
         const lastDate = x.domain()[1];
         const firstDate = new Date(lastDate.getTime() - 60 * 60 * 1000);
         const initialSelection = [x(firstDate), x(lastDate)];
@@ -133,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     .data([filteredData])
                     .attr("class", "line")
                     .attr("d", line2.x(d => zoomedX(d["Local Time"])).y(d => zoomedY(d["CO2_2"])))
-                    .style("stroke", "red")
+                    .style("stroke", "green")
                     .style("stroke-width", 1.5)
                     .style("fill", "none");
 
@@ -143,8 +203,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 svgZoomed.append("g")
                     .call(d3.axisLeft(zoomedY));
+                // Add the Y gridlines and label
+                svgZoomed.append("g")
+                    .call(d3.axisLeft(zoomedY).ticks(height / 40))
+                    .call(g => g.select(".domain").remove())
+                    .call(g => g.selectAll(".tick line").clone()
+                        .attr("x2", width)
+                        .attr("stroke-opacity", 0.1));
             }
         }
+    
+        
+
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('keyup', function () {
+            const searchTerm = searchInput.value.toLowerCase();
+            const rows = tbody.selectAll("tr").nodes();
+            rows.forEach(row => {
+                const cells = row.querySelectorAll("td");
+                const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(searchTerm));
+                row.style.display = match ? '' : 'none';
+            });
+        });
+
     }).catch(error => {
         console.error('Error loading CSV file:', error);
     });

@@ -1,5 +1,16 @@
 # BiolabSensors
 Data Visualization [page](https://uwenji.github.io/BiolabSensors/)
+
+Enable Github Pages for this repository:
+1. Go to repository Settings
+2. Find Pages setting
+
+Configure GitHub Pages:
+- GitHub Pages is set up to serve from the root directory:
+1. Go to the repository settings on GitHub.
+2. Scroll down to the "GitHub Pages" section.
+3. Select the branch as main and the root folder.
+
 # General Setup:
 
 Configurations 
