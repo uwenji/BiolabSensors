@@ -2,37 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab Sensor Data Visualization</title>
+    <title>CO2 Data Plot</title>
     <link rel="stylesheet" href="styles/style.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="scripts/script.js" defer></script>
 </head>
-<body class="light">
-    <header class="light">
-        <h1>BioLab Sensor Data Visualization</h1>
-        <p>visualize data in Biolab at Royal Danish Academy. the data CO2 conceration and Oxgan level </p>
-    </header>
-    <button id="theme-toggle">Dark</button>
-    <div id="chart-container" class="light">
-        <div id="main-chart"></div>
-        <div id="zoomed-chart"></div>
-    </div>
-    <div id="data-table-container" class="light">
-        <input type="text" id="search-input" placeholder="Search sensor data...">
-        <div id="data-table-wrapper">
-            <table id="data-table">
-                <thead>
-                    <tr>
-                        <th>Time</th>
-                        <th>CO2_1</th>
-                        <th>CO2_2</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+<body>
+    <h1>CO2 Data Visualization</h1>
+    <p>this is monitoring the data from CO2 sensors and varity of data in Biolab at royal danish academy </p>
+    <div id="chart-area">
+        <div id="chart1"></div>
+        <p>below the chart is for focus the chart with bush, the window will update the upper chart</p>
+        <div id="chart2"></div>
+        <div id="data-table-container">
+            <input type="text" id="search-input" placeholder="Search sensor data...">
+            <div id="data-table-wrapper">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>CO2_1</th>
+                            <th>CO2_2</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <div id="legend" class="light"></div>
 </body>
 </html>

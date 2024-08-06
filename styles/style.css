@@ -1,127 +1,51 @@
-/* General Styles */
 body {
-    max-width: 760px;
-    margin: 0;
-    padding: 0 1em;
-    font-size: 12pt;
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-/* Headers */
-header {
-    text-align: center;
-    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+    align-items: center;
 }
 
 h1 {
-    font-size: 22pt;
-    font-weight: 500;
-    padding: 1em 0 0;
-    color: #000;
+    text-align: center;
+    margin: 20px 0; 
+}
+p {
+    text-align: center;
+}
+#chart-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-h2 {
-    font-size: 24pt;
-    padding: 1em 0;
-    font-weight: 500;
-    font-style: italic;
-    color: var(--primary-color);
-}
-
-/* Chart Container */
-#chart-container {
-    width: 80%;
-    margin: auto;
-}
-
-#main-chart, #zoomed-chart {
+#chart1, #chart2 {
     margin: 20px 0;
 }
 
-/* Buttons */
-button {
-    display: block;
-    margin: 10px auto;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    text-transform: uppercase;
-    border-radius: 3px;
-    color: #000 !important;
-    background: #fff;
-    border: 1px solid #000;
-    transition: all .05s ease-in-out;
-    box-shadow: 0.5em 0.5em #eee;
+.area {
+    fill: steelblue;
+    opacity: 0.5;
 }
 
-button:hover {
-    box-shadow: 0.5em 0.5em var(--accent-color);
-}
-
-/* Dark Theme */
-body.dark {
-    background-color: #333;
-    color: #fff;
-}
-
-#chart-container.dark {
-    background-color: #444;
-}
-
-button.dark {
-    background-color: #555;
-    border-color: #fff;
-    color: #fff !important;
-}
-
-button.dark:hover {
-    box-shadow: 0.5em 0.5em var(--accent-color);
-}
-
-/* Line Styles */
 .line {
     fill: none;
-    stroke-width: 2px;
-}
-
-.line1 {
     stroke: steelblue;
+    stroke-width: 1.5px;
 }
 
-.line2 {
-    stroke: red;
+.axis--x path {
+    display: none;
 }
 
-/* Axis Styles */
-.axis path, .axis line {
+.zoom {
+    cursor: move;
     fill: none;
+    pointer-events: all;
+}
+
+.brush .selection {
+    fill: #777;
+    fill-opacity: 0.3;
+    stroke: #fff;
     shape-rendering: crispEdges;
-}
-
-/* Legend */
-#legend {
-    text-align: center;
-}
-
-.legend {
-    display: inline-block;
-    margin-right: 20px;
-}
-
-.legend span {
-    display: inline-block;
-    width: 20px;
-    height: 10px;
-    margin-right: 5px;
-}
-
-.legend .line1 {
-    background-color: steelblue;
-}
-
-.legend .line2 {
-    background-color: red;
 }
 
 #data-table-wrapper {
@@ -142,16 +66,4 @@ th, td {
 
 th {
     background-color: #f4f4f4;
-}
-
-body.dark #data-table-container {
-    color: #fff;
-}
-
-body.dark th {
-    background-color: #444;
-}
-
-body.dark td, body.dark th {
-    border-bottom: 1px solid #555;
 }

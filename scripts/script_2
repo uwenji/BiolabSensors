@@ -1,0 +1,160 @@
+function _1(md){return(
+md`# Focus + context II
+
+[d3.dispatch](https://d3js.org/d3-dispatch) creates a new dispatch that enables different charts to communicate, with messages flowing in both directions. This allows the user to zoom in the focus chart or brush in the context panel, and see the other chart synchronize. Data: [Yahoo Finance](https://finance.yahoo.com/lookup).`
+)}
+
+function _focus(width,Plot,aapl,svg,d3,dispatch)
+{
+  const spec = {
+    width,
+    height: 360,
+    marks: [
+      Plot.areaY(aapl, {
+        x: "Date",
+        y: "Close",
+        fill: "steelblue",
+        clip: true
+      })
+    ],
+    x: { type: "utc" }
+  };
+
+  let chart = Plot.plot(spec);
+  const wrapper = svg`<svg viewBox="${chart.getAttribute("viewBox")}">${chart}`;
+
+  const x = chart.scale("x");
+  const y = chart.scale("y");
+  let domain = x.domain;
+
+  const redraw = () =>
+    chart.replaceWith(
+      (chart = Plot.plot({ ...spec, x: { type: "utc", domain }, y }))
+    );
+
+  const X0 = d3.scaleUtc(x.domain, x.range);
+  const E = [[x.range[0], 0], [x.range[1], 0]];
+  const zoom = d3
+    .zoom()
+    .scaleExtent([1, 100])
+    .extent(E)
+    .translateExtent(E) // same as extent, as the default view is zoom {k:1, x:0}
+    .on("zoom end", (event) => {
+      const { transform, sourceEvent } = event;
+      domain = transform.rescaleX(X0).domain();
+      redraw();
+      // broadcast changes if they are originated here
+      if (sourceEvent) dispatch.call("timeWindow", wrapper, domain);
+    });
+
+  d3.select(wrapper).call(zoom);
+
+  dispatch.on("timeWindow.details", function (value) {
+    if (this === wrapper) return; // ignore our own message
+
+    domain = (value == null ? x.domain : value).slice();
+    d3.select(wrapper).call(
+      zoom.transform,
+      d3.zoomIdentity
+        .translate(x.range[0], 0)
+        .scale(
+          Math.min(100, (x.domain[1] - x.domain[0]) / (domain[1] - domain[0]))
+        )
+        .translate(-X0(domain[0]), 0)
+    );
+  });
+
+  return wrapper;
+}
+
+
+function _context(Plot,width,aapl,svg,d3,dispatch)
+{
+  const chart = Plot.plot({
+    width,
+    height: 90,
+    marks: [Plot.areaY(aapl, { x: "Date", y: "Close", fill: "steelblue" })],
+    y: { ticks: 0, label: null }
+  });
+  const x = chart.scale("x"),
+    [x1, x2] = x.range;
+  const y = chart.scale("y"),
+    [y1, y2] = y.range;
+
+  let domain = x.domain;
+
+  const wrapper = svg`<svg viewBox="${chart.getAttribute("viewBox")}">${chart}`;
+
+  const brush = d3
+    .brushX()
+    .extent([
+      [x1, y2],
+      [x2, y1]
+    ])
+    .on("brush end", (event) => {
+      const { selection, sourceEvent } = event;
+      domain = selection && selection.map(x.invert);
+
+      // broadcast changes if they are originated here
+      if (sourceEvent) dispatch.call("timeWindow", wrapper, domain);
+    });
+
+  d3.select(wrapper).call(brush);
+
+  dispatch.on("timeWindow.focus", function (value) {
+    if (this === wrapper) return; // ignore our own message
+
+    if (value == null) return;
+    domain = value;
+    const b = domain.map(x.apply);
+    if (b[0] === x1 && b[1] === x2) {
+      d3.select(wrapper).call(brush.clear);
+    } else {
+      d3.select(wrapper).call(brush.move, domain.map(x.apply));
+    }
+  });
+
+  return wrapper;
+}
+
+
+function _4(md){return(
+md`Any number of listeners can register callbacks or send an event like, for instance, this reset button:
+`
+)}
+
+function _5(dispatch,d3,Inputs)
+{
+  // initialize
+  function reset() {
+    dispatch.call("timeWindow", "reset", [
+      d3.isoParse("2017"),
+      d3.isoParse("2018")
+    ]);
+  }
+  reset();
+
+  // reset on click
+  return Inputs.button("reset", { reduce: reset });
+}
+
+
+function _dispatch(d3){return(
+d3.dispatch("timeWindow")
+)}
+
+function _7(md){return(
+md`Note: this notebook uses Plot to draw the charts. See also the [D3 version](/@d3/focus-context).`
+)}
+
+export default function define(runtime, observer) {
+  const main = runtime.module();
+  main.variable(observer()).define(["md"], _1);
+  main.variable(observer("focus")).define("focus", ["width","Plot","aapl","svg","d3","dispatch"], _focus);
+  main.variable(observer("context")).define("context", ["Plot","width","aapl","svg","d3","dispatch"], _context);
+  main.variable(observer()).define(["md"], _4);
+  main.variable(observer()).define(["dispatch","d3","Inputs"], _5);
+  main.variable(observer("dispatch")).define("dispatch", ["d3"], _dispatch);
+  main.variable(observer()).define(["md"], _7);
+  return main;
+}

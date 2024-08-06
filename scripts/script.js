@@ -1,23 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Theme switcher
-    const themeToggleButton = document.getElementById('theme-toggle');
-    const body = document.body;
-    const header = document.querySelector('header');
-    const chartContainer = document.getElementById('chart-container');
-
-    themeToggleButton.addEventListener('click', () => {
-        if (body.classList.contains('light')) {
-            body.classList.replace('light', 'dark');
-            header.classList.replace('light', 'dark');
-            chartContainer.classList.replace('light', 'dark');
-            themeToggleButton.textContent = 'Light';
-        } else {
-            body.classList.replace('dark', 'light');
-            header.classList.replace('dark', 'light');
-            chartContainer.classList.replace('dark', 'light');
-            themeToggleButton.textContent = 'Dark';
-        }
-    });
 
     // Function to interpolate missing values
     function interpolateMissingValues(data, field) {
@@ -73,12 +54,16 @@ document.addEventListener('DOMContentLoaded', function () {
         // Interpolate missing values for CO2_2
         interpolateMissingValues(data, "CO2_2");
 
-        const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-        const width = 960 - margin.left - margin.right;
-        const height = 500 - margin.top - margin.bottom;
+        const margin = { top: 10, right: 10, bottom: 100, left: 40 },
+        margin2 = { top: 430, right: 10, bottom: 20, left: 40 },
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom,
+        height2 = 500 - margin2.top - margin2.bottom;
 
-        const x = d3.scaleTime().range([0, width]);
-        const y = d3.scaleLinear().range([height, 0]);
+        const x = d3.scaleTime().range([0, width]),
+              x2 = d3.scaleTime().range([0, width]),
+              y = d3.scaleLinear().range([height, 0]),
+              y2 = d3.scaleLinear().range([height2, 0]);
 
         const line1 = d3.line()
             .defined(d => d["CO2_1"] !== null)
@@ -92,13 +77,13 @@ document.addEventListener('DOMContentLoaded', function () {
             .y(d => y(d["CO2_2"]))
             .curve(d3.curveLinear);
 
-        const svgMain = d3.select("#main-chart").append("svg")
+        const svgMain = d3.select("#chart2").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        const svgZoomed = d3.select("#zoomed-chart").append("svg")
+        const svgZoomed = d3.select("#chart1").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
