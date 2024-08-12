@@ -26,7 +26,7 @@ def send_command(ser, command):
     return response.strip()
 
 def read_ser():
-    ser = serial.Serial('/dev/ttyUSB0',9600, timeout=1) #replace usb by '/dev/ttyUSB0'
+    ser = serial.Serial('/dev/ttyAMA0',9600, timeout=1) #replace usb by '/dev/ttyUSB0'
 
     try:
         #device_info = send_command(ser, 'Y')
