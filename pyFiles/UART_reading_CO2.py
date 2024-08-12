@@ -110,6 +110,6 @@ def main():
     print(str(ppm2) + " ppm")
 
      #save csv file location
-    saveCSV("/home/pi/Desktop/BiolabSensors/CSV/co2.csv",data)
+    saveCSV("/home/pi/Desktop/BiolabSensors/data/co2.csv",data)
 if __name__ == "__main__":
     main()
