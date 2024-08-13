@@ -1,7 +1,7 @@
 import csv
 
-input_file = 'co2.csv'
-output_file = 'co2_cleaned.csv'
+input_file = '/home/pi/Desktop/BiolabSensors/data/co2.csv'
+output_file = '/home/pi/Desktop/BiolabSensors/data/co2_cleaned.csv'
 
 with open(input_file, 'r') as infile, open(output_file, 'w', newline='') as outfile:
     reader = csv.reader(infile)
