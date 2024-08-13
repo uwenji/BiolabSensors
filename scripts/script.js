@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Load CSV data and render chart
-    d3.csv('data/co2.csv').then(data => {
+    d3.csv('data/co2_cleaned.csv').then(data => {
         const parseTime = d3.timeParse("%a %b %d %H:%M:%S %Y"); //Thu Jul 11 18:20:11 2024
         const tbody = d3.select("#data-table tbody");
         const formatTime = d3.timeFormat("%Y-%m-%d %H:%M:%S");
