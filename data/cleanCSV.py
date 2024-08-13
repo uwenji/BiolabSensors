@@ -12,5 +12,5 @@ try:
             cleaned_row = [field.replace('\n', '').replace('"', '') for field in row]
             writer.writerow(cleaned_row)
     print("file cleaed and saved successfully.")
-excpet Exception as e:
+except Exception as e:
     print(f"An error occurred: {e}")
