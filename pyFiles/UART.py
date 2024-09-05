@@ -33,7 +33,7 @@ def read_ser():
         #response = ser.read(ser.in_waiting or 1)
         #print("Device Information:", device_info)
         
-        device_info = send_command(ser, 'P 11 6')
+        device_info = send_command(ser, 'Z')
         response = ser.read(ser.in_waiting or 1)
         print(device_info)
         #ppm = process_sensor_data(device_info)
